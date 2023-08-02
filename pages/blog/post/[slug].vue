@@ -17,30 +17,6 @@
             return String.fromCharCode(dec);
         });
     }
-
-    // Append every img tag with a onerror attribute
-    // This will allow us to replace the image with a placeholder if it fails to load
-
-    // Load string as HTML
-    let htmlDoc = null
-    if(process.client) {
-        const parser = new DOMParser()
-        htmlDoc = parser.parseFromString(post.value.content.rendered, 'text/html')
-
-        // Get all img tags
-        const images = htmlDoc.getElementsByTagName("img")
-
-        // Loop through all img tags
-        for(let i = 0; i < images.length; i++) {
-            
-            // Add onerror attribute
-            images[i].setAttribute("onerror", "this.style.display = 'none';")
-        }
-
-        // Convert HTML back to string
-        htmlDoc = htmlDoc.documentElement.outerHTML
-    }
-
 </script>
 
 <template>
@@ -61,7 +37,7 @@
             :sizes="`100vw`"
         />
         <div id="body">
-            <div v-html="htmlDoc"></div>
+            <div v-html="post.content.rendered"></div>
         </div>
     </div>
 </template>
